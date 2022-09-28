@@ -9,6 +9,7 @@ from apps.views.twitter import views_twitter
 from apps.views.scraper import views_scraper
 from apps.views.portal import views_portal
 from apps.views.auth import views_auth
+from apps.views.messages import views_messages
 from flask import Blueprint, render_template, request, flash, jsonify, redirect, url_for, send_from_directory, send_file, make_response, current_app
 from flask_login import login_required, current_user
 from werkzeug.utils import secure_filename
@@ -152,6 +153,9 @@ def functions():
 @views.route('/projects')
 def projects():
     return render_template('services/projects.html')
+
+'''     MESSAGES FUNCTIONS     '''
+views.register_blueprint(views_messages)
 
 '''     AUTH FUNCTIONS     '''
 views.register_blueprint(views_auth)

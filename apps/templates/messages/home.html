@@ -1,0 +1,460 @@
+{% extends "messages/base.html" %}
+
+{% block title %} Messages {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+<style>
+	#scroll-to-bottom {
+		margin:4px, 4px;
+		padding:4px;
+		border-radius: 5px;
+		background-color: #1a2035; /*  #1f283e */
+	}
+    .content {
+        height: 50vh;
+		/* overflow-x: hidden; */
+		/* overflow-y: auto; */
+        overflow: scroll;
+		text-align:justify;
+    }
+</style>
+{% endblock stylesheets %}
+
+{% block content %}
+
+<!-- Sidebar -->
+<div class="sidebar sidebar-style-2" data-background-color="dark2">			
+	<div class="sidebar-wrapper scrollbar scrollbar-inner">
+		<div class="sidebar-content">
+			<div class="user">
+				<div class="avatar-sm float-left mr-2">
+					<img src="/static/assets/img/profile-outline-light.png" alt="..." class="avatar-img rounded-circle">
+				</div>
+				<div class="info">
+					<a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
+						<span>
+							{{ current_user.username }}
+							<span class="user-level">
+								{{ current_user.email }}
+							</span>
+							<span class="caret"></span>
+						</span>
+					</a>
+					<div class="clearfix"></div>
+
+					<div class="collapse in" id="collapseExample">
+						<ul class="nav">
+							<!-- <li>
+								<a href="{{ url_for('views.auth.profile') }}">
+									<span class="link-collapse">View Profile</span>
+								</a>
+							</li>
+							<li>
+								<a href="{{ url_for('views.auth.edit_profile') }}">
+									<span class="link-collapse">Edit Profile</span>
+								</a>
+							</li> -->
+							<li>
+								<a href="{{ url_for('views.messages.home',receive_user='select user') }}">
+									<span class="link-collapse">Messages</span>
+								</a>
+							</li>
+							<li>
+								<a href="{{ url_for('views.auth.logout') }}">
+									<span class="link-collapse">Logout</span>
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<ul class="nav nav-primary">
+				<center>
+					<li class="nav-item">
+						<button type="button" class="btn btn-outline-primary" id="alert">
+							<span class="btn-label ml-4 mr-2">
+								New Message
+							</span>
+							<span class='btn-label mr-4'>
+								<i class="fa fa-plus"></i>
+							</span>
+						</button>
+				</center>
+				<br>
+				<li class="nav-item {% if 'index' in segment %} active {% endif %}">
+					<a data-toggle="collapse" href="#favorite-contacts" class="collapsed" aria-expanded="false">
+						<i class="fas fa-star"></i>
+						<p>Favorite Contacts</p>
+						<span class="caret"></span>
+					</a>
+					<div class="collapse {% if 'index' in segment %} show {% endif %}" id="favorite-contacts">
+						<ul class="nav nav-collapse">
+							<li>
+								<a href="#1">
+									<div class="avatar-sm float-left mr-2">
+										<img src="/static/assets/img/profile-outline-light.png" alt="..." class="avatar-img rounded-circle">
+									</div>
+									<p>Fav 1</p>
+								</a>
+							</li>
+							<li>
+								<a href="#2">
+									<div class="avatar-sm float-left mr-2">
+										<img src="/static/assets/img/profile-outline-light.png" alt="..." class="avatar-img rounded-circle">
+									</div>
+									<p>Fav 2</p>
+								</a>
+							</li>
+							<li>
+								<a href="#3">
+									<div class="avatar-sm float-left mr-2">
+										<img src="/static/assets/img/profile-outline-light.png" alt="..." class="avatar-img rounded-circle">
+									</div>
+									<p>Fav 3</p>
+								</a>
+							</li>
+						</ul>
+					</div>
+				</li>
+				<!-- PART FOR ALL USERS -->
+				<li class="nav-item {% if 'index' in segment %} active {% endif %}">
+					<a data-toggle="collapse" href="#all-contacts" class="collapsed" aria-expanded="false">
+						<i class="fas fa-user"></i>
+						<p>All Contacts</p>
+						<span class="caret"></span>
+					</a>
+					<div class="collapse {% if 'index' in segment %} show {% endif %}" id="all-contacts">
+						<ul class="nav nav-collapse">
+                            <div id="all-users"></div>
+							<!-- <li>
+								<a href="{{ url_for('views.messages.home',method='POST',receive_user='davidstokarski') }}">
+									<div class="avatar-sm float-left mr-2">
+										<img src="/static/assets/img/profile-outline-light.png" alt="..." class="avatar-img rounded-circle">
+									</div>
+									<p>davidstokarski</p>
+								</a>
+							</li>
+							<li>
+								<a href="{{ url_for('views.messages.home',method='POST',receive_user='un') }}">
+									<div class="avatar-sm float-left mr-2">
+										<img src="/static/assets/img/profile-outline-light.png" alt="..." class="avatar-img rounded-circle">
+									</div>
+									<p>un</p>
+								</a>
+							</li> -->
+						</ul>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<!-- End Sidebar -->
+
+<div class="content">
+	<div class="page-inner">
+		<div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+			<!-- <h2 class="mr-2">To:</h2> -->
+			<!-- <div id="select_user"></div> -->
+			<br>
+		</div>
+        <div class="row">
+		    <h6 class="page-title text-white pb-2 fw-bold">To: {{ package.receive_user }}</h6>
+            <!-- <center>
+                <button type="button" class="btn btn-icon btn-round btn-default btn-sm ml-1">
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </center> -->
+        </div>
+		<div id="scroll-to-bottom">
+            <div class="content">
+                <div id="messages"></div>
+            </div>
+		</div>
+		<div id="select_user"></div>
+	</div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    document.getElementById('button').addEventListener('click', function(){
+
+    var element = document.getElementById('scroll-to-bottom');
+
+    element.scrollTop = element.scrollHeight;
+    });
+
+
+</script>
+
+<script>
+	window.package = {{ package | tojson }}
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.25.2/trumbowyg.min.js"></script>
+<script src="//cdn.quilljs.com/0.16.0/quill.min.js"></script>
+
+<script type="module">
+    import {
+        createSignal,
+        onCleanup,
+        onMount
+    } from "https://cdn.skypack.dev/solid-js";
+    import { render } from "https://cdn.skypack.dev/solid-js/web";
+    import { createStore } from "https://cdn.skypack.dev/solid-js/store";
+    import html from "https://cdn.skypack.dev/solid-js/html";
+
+	const users = window.package.users
+    // const PROJECTS = ["Border Security Alert", "Vanguard Human Trafficking Report", "SOUTHCOM Security Bulletin", "Border Security Alert Cartel Report"]
+
+    function checkValid({ element, validators = [] }, setErrors, errorClass) {
+        return async () => {
+            element.setCustomValidity("");
+            element.checkValidity();
+            let message = element.validationMessage;
+            if (!message) {
+                for (const validator of validators) {
+                    const text = await validator(element);
+                    if (text) {
+                        element.setCustomValidity(text);
+                        break;
+                    }
+                }
+                message = element.validationMessage;
+            }
+            if (message) {
+                errorClass && element.classList.toggle(errorClass, true);
+                setErrors({ [element.name]: message });
+            }
+        };
+    }
+
+    function useForm({ errorClass }) {
+        const [errors, setErrors] = createStore({}),
+            fields = {};
+
+        const validate = (ref, accessor) => {
+            const validators = accessor() || [];
+            let config;
+            fields[ref.name] = config = { element: ref, validators };
+            ref.onblur = checkValid(config, setErrors, errorClass);
+            ref.oninput = () => {
+                if (!errors[ref.name]) return;
+                setErrors({ [ref.name]: undefined });
+                errorClass && ref.classList.toggle(errorClass, false);
+            };
+        };
+
+        const formSubmit = (ref, accessor) => {
+            const callback = accessor() || (() => { });
+            ref.setAttribute("novalidate", "");
+            ref.onsubmit = async (e) => {
+                e.preventDefault();
+                let errored = false;
+
+                for (const k in fields) {
+                    const field = fields[k];
+                    await checkValid(field, setErrors, errorClass)();
+                    if (!errored && field.element.validationMessage) {
+                        field.element.focus();
+                        errored = true;
+                    }
+                }
+                !errored && callback(ref);
+            };
+        };
+
+        return { validate, formSubmit, errors };
+    }
+
+
+    const ErrorMessage = (props) => html`<span class="error-message">${props.error}</span>`;
+
+    const Select = (props) => {
+        return html`
+    <select class="custom-select form-control" required=${props.required} name=${props.name} onInput=${props.onInput} value=${props.value}>
+      ${() => props.options.length > 0 ? html`
+      ${props.placeholder && html`<option disabled selected value>${props.placeholder === true ? "-- select one --" : props.placeholder}</option>`}
+        ${() => props.options.map(o => html`<option value="${o}" selected="${props.default && (o === props.default)}">${o}</option>`)}
+        ` : html`<option disabled value>no options available</option>`}
+      </select>
+  `
+    }
+
+    const SelectUserForm = () => {
+        const [fields, setFields] = createStore({ project: "Border Security Alert", status: "pending" });
+        const taxonomy = () => PROJECT_TAXONOMY[fields.project || "Border Security Alert"]
+        const setFieldDOM = (e) => setFields(e.target.name, e.target.value)
+        let summaryRef, articleRef;
+        onMount(() => {
+            $(summaryRef).trumbowyg({
+                btns: [['bold', 'italic', 'underline'], ['link']],
+                autogrow: true
+            })
+            $(articleRef).trumbowyg({
+                btns: [['bold', 'italic', 'underline'], ['link']],
+                autogrow: true
+            })
+        })
+        const validateForm = (form) => {
+            const validity = form.checkValidity()
+            if (validity === false) {  
+                form.querySelector(":invalid").scrollIntoView({behavior:"smooth"})
+                for (let $el of form.querySelectorAll(".trumbowyg-textarea:invalid")) {
+                    $el.parentElement.parentElement.classList.add('is-invalid')
+                }
+            }  
+            form.classList.add('was-validated');  
+            return validity
+        }
+        const handleSubmit = (e) => {
+            if (!validateForm(e.target)) {
+                e.preventDefault();  
+                e.stopPropagation();
+            }  
+        }
+        const handleIrrelevant = (e) => {
+            const form = e.target.parentElement.parentElement
+            setFields("status", "irrelevant")
+            if (!validateForm(form)) return false;
+            form.submit()
+        }
+        return (html`
+<form onSubmit=${handleSubmit} novalidate action="" method="post">
+    <div class="form-group">
+			<div class="input-icon">
+				<input class="form-control" name="text" onInput=${setFieldDOM} type="text" placeholder="Message" />
+				<span class="input-icon-addon">
+                    <button type="submit" class="btn btn-primary mr-3"><span class="btn-label"><i class="flaticon-message mr-3"></i></span> Send</button>
+				</span>
+			</div>
+        </div>
+    <!--<div class="form-group">
+      	<${Select} name="receive_user" required=${true} onInput=${setFieldDOM} options=${users} placeholder="select user"/>
+    </div>-->
+</form>
+  `);
+    };
+    render(SelectUserForm, document.getElementById("select_user"));
+
+</script>
+
+<script>
+
+    let message_text = '<ul class="timeline">'; 
+    for (let x = 0; x < window.package.texts.length; x++) {
+        var text = window.package.texts[x];
+        if (text.send_user==window.package.user) {
+            message_text+=`<li class="timeline-inverted">
+            <div class="timeline-badge info"><i class="flaticon-message"></i></div>
+            <div class="timeline-panel">
+                <div class="timeline-heading">
+                    <h4 class="timeline-title">${text.text}</h4>
+                </div>
+                <div class="timeline-body">
+                    <p>${text.send_time}</p>
+                </div>
+            </div>
+        </li>`;
+        }
+        else {
+            message_text+=`
+            <li>
+            <div class="timeline-badge"><i class="flaticon-message"></i></div>
+            <div class="timeline-panel">
+                <div class="timeline-heading">
+                    <h4 class="timeline-title">${text.text}</h4>
+                </div>
+                <div class="timeline-body">
+                    <p>${text.send_time}</p>
+                </div>
+            </div>
+        </li>`;
+        }
+    }
+    message_text += '</ul>';
+    
+    document.getElementById("messages").innerHTML = message_text;
+    
+</script>
+
+<script>
+    //== Class definition
+    var SweetAlert2Demo = function() {
+
+        //== Demos
+        var initDemos = function() {
+            //== Sweetalert Demo
+            $('#alert').click(function(e){
+                swal({
+                    title: 'Enter username',
+                    html: '<br><input class="form-control" placeholder="Username" id="input-field">',
+                    content: {
+                        element: "input",
+                        attributes: {
+                            placeholder: "Username",
+                            type: "text",
+                            id: "input-field",
+                            className: "form-control"
+                        },
+                    },
+                    buttons: {
+                        cancel: {
+                            visible: true,
+                            className: 'btn btn-danger'
+                        },    			
+                        confirm: {
+                            className : 'btn btn-success'
+                        }
+                    },
+                }).then(
+                function() {
+                    let input = $('#input-field').val();
+                    if (input == "") {
+                        //pass
+                    }
+                    else if (window.package.users.includes(input)) {
+                        let path = "/message/" + input + "";
+                        window.location.pathname = path;
+                    }
+                    else {
+                        swal("", "No user named: " + input);
+                    }
+                }
+                );
+            });
+
+        };
+
+        return {
+            //== Init
+            init: function() {
+                initDemos();
+            },
+        };
+    }();
+
+    //== Class Initialization
+    jQuery(document).ready(function() {
+        SweetAlert2Demo.init();
+    });
+</script>
+
+<script>
+    let users_text='';
+    for (let i = 0; i < window.package.users.length; i++) {
+        var user = window.package.users[i];
+        users_text+=`<li><a href="{{ url_for("views.messages.home",method="POST",receive_user="davidstokarski") }}">
+        <div class="avatar-sm float-left mr-2">
+                <img src="/static/assets/img/profile-outline-light.png" alt="..." class="avatar-img rounded-circle">
+            </div>
+            <p>${user}</p>
+        </a>
+    </li>`;
+    }
+    document.getElementById("all-users").innerHTML = users_text;
+</script>
+
+{% endblock %}

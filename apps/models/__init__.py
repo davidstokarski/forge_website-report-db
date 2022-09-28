@@ -13,3 +13,4 @@ from .auth import User
 from .scraper import Scrape
 from .twitter import TwitterScrape
 from .portal import Report, Role
+from .messages import Message

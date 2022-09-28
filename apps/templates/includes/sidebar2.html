@@ -6,7 +6,7 @@
 				<div class="sidebar-content">
 					<div class="user">
 						<div class="avatar-sm float-left mr-2">
-							<img src="/static/assets/img/profile-fill-light.png" alt="..." class="avatar-img rounded-circle">
+							<img src="/static/assets/img/profile-outline-light.png" alt="..." class="avatar-img rounded-circle">
 						</div>
 						<div class="info">
 							<a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
@@ -22,7 +22,7 @@
 
 							<div class="collapse in" id="collapseExample">
 								<ul class="nav">
-									<li>
+									<!-- <li>
 										<a href="{{ url_for('views.auth.profile') }}">
 											<span class="link-collapse">View Profile</span>
 										</a>
@@ -30,6 +30,11 @@
 									<li>
 										<a href="{{ url_for('views.auth.edit_profile') }}">
 											<span class="link-collapse">Edit Profile</span>
+										</a>
+									</li> -->
+									<li>
+										<a href="{{ url_for('views.messages.home',receive_user='select user') }}">
+											<span class="link-collapse">Messages</span>
 										</a>
 									</li>
 									<li>
@@ -54,6 +59,12 @@
 										<a href="{{ url_for('views.home') }}">
 											<i class="fas fa-home"></i>
 											<p>Home</p>
+										</a>
+									</li>
+									<li>
+										<a href="{{ url_for('views.messages.home',receive_user='select user') }}">
+											<i class="fas fa-comments"></i>
+											<p>Messages</p>
 										</a>
 									</li>
 									<li>
@@ -130,7 +141,7 @@
 								<p>SI Portal</p>
 							</a>
 						</li>
-						<!-- RENDER ONLY FOR DEVELOPMENT -->
+						<!-- RENDER ONLY FOR DEVELOPMENT
 						<li class="nav-section">
 							<span class="sidebar-mini-icon">
 								<i class="fa fa-ellipsis-h"></i>
