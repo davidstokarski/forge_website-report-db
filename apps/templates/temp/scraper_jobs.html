@@ -1,0 +1,80 @@
+<!--
+    TODO:
+        - make it so that the date doesn't change
+-->
+
+{% extends "layouts/base.html" %}
+
+{% block title %}Scraper Success!{% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+{% block content %}
+
+<div class="content">
+    <div class="panel-header bg-primary-gradient">
+        <div class="page-inner py-5">
+            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+                <div>
+                    <h2 class="text-white pb-2 fw-bold">Scraper Jobs</h2>
+                    <h5 class="text-white op-7 mb-2"></h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page-inner mt--5">
+        <div class="row row-card-no-pd">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-head-row card-tools-still-right">
+                            <h4 class="card-title">Scrapes for {{ email }}</h4>
+                            <div class="card-tools">
+                                <button class="btn btn-icon btn-link btn-primary btn-xs btn-refresh-card" id="refresh-btn"><span class="fa fa-sync"></span></button>
+                            </div>
+                        </div>
+                    </div>
+                <table class="table table-hover">
+                    <thead>
+                        <tr><th>#</th>
+                            <th>Search</th>
+                            <th>Range start</th>
+                            <th>Range end</th>
+                            <th>Creation</th>
+                            <th>File</th>
+                        </tr>
+                    </thead>
+                    {% for job in all_jobs %} 
+                    <tr>
+                        <td>{{ job.id }}</td> 
+                        <td>{{ job.search_terms }}</td>
+                        <td>{{ job.start_date.strftime("%Y-%m-%d") }}</td>
+                        <td>{{ job.end_date.strftime("%Y-%m-%d") }}</td>
+                        <td>{{ job.create_date.strftime("%Y-%m-%d %H:%M:%S") }}</td>
+                        <td>
+                            {% if job.in_progress %}
+                            <div class="loader" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                            {% else %}
+                            <a href="{{ url_for('views.scraper.scraper_success',id=job.id) }}" target="_blank">View</a>
+                            {% endif %}
+                        </td> 
+                        
+                    </tr>
+                    {% endfor %} 
+                </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    document.getElementById("refresh-btn").onclick = function() {
+        window.location.href = window.location.href
+    }
+</script>
+{% endblock javascripts %}

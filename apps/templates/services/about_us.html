@@ -1,0 +1,192 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} About Us {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+<!-- <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
+<script defer src="https://pyscript.net/alpha/pyscript.js"></script> -->
+{% endblock stylesheets %}
+
+{% block content %}
+	<div class="content">
+		<div class="panel-header bg-primary-gradient"> <!-- HEADER -->
+			<div class="page-inner py-5">
+				<div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+					<div>
+						<h2 class="text-white pb-2 fw-bold">About Us</h2>
+						<h5 class="text-white op-7 mb-2">FORGE Security</h5>
+					</div>
+					<div class="ml-md-auto py-2 py-md-0">
+						<a href="{{ url_for('views.home') }}" class="btn btn-white btn-border btn-round mr-2">Return Home</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="page-inner mt--5">
+			<div class="row row-card-no-pd">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="card-header">
+							<div class="card-head-row">
+								<h4 class="card-title">FORGE Security, PHC Special Project</h4>
+							</div>
+							<p class="card-category">
+							Using technology to streamline the data collection and analysis process.</p>
+						</div>
+						<div class="card-body">
+							<p>This is where the description can go.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- TIMELINE -->
+			<h6 class="page-title">Timeline</h6>
+			<div class="row">
+				<div class="col-md-12">
+					<ul class="timeline">
+						<li>
+							<div class="timeline-badge"><i class="flaticon-message"></i></div>
+							<div class="timeline-panel">
+								<div class="timeline-heading">
+									<h4 class="timeline-title">Today</h4>
+									<p><small class="text-muted"><i class="flaticon-message"></i> 11 hours ago via Twitter</small></p>
+								</div>
+								<div class="timeline-body">
+									<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+								</div>
+							</div>
+						</li>
+						<li class="timeline-inverted">
+							<div class="timeline-badge warning"><i class="flaticon-alarm-1"></i></div>
+							<div class="timeline-panel">
+								<div class="timeline-heading">
+									<h4 class="timeline-title">Mussum ipsum cacilds</h4>
+								</div>
+								<div class="timeline-body">
+									<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="timeline-badge danger"><i class="flaticon-error"></i></div>
+							<div class="timeline-panel">
+								<div class="timeline-heading">
+									<h4 class="timeline-title">Mussum ipsum cacilds</h4>
+								</div>
+								<div class="timeline-body">
+									<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+								</div>
+							</div>
+						</li>
+						<li class="timeline-inverted">
+							<div class="timeline-panel">
+								<div class="timeline-heading">
+									<h4 class="timeline-title">Mussum ipsum cacilds</h4>
+								</div>
+								<div class="timeline-body">
+									<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="timeline-badge info"><i class="flaticon-price-tag"></i></div>
+							<div class="timeline-panel">
+								<div class="timeline-heading">
+									<h4 class="timeline-title">Mussum ipsum cacilds</h4>
+								</div>
+								<div class="timeline-body">
+									<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+									<hr>
+									<div class="btn-group dropdown">
+										<button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
+											<span class="btn-label">
+												<i class="fa fa-cog"></i>
+											</span>
+										</button>
+										<ul class="dropdown-menu" role="menu">
+											<li>
+												<a class="dropdown-item" href="#">Action</a>
+												<a class="dropdown-item" href="#">Another action</a>
+												<div class="dropdown-divider"></div>
+												<a class="dropdown-item" href="#">Something else here</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="timeline-panel">
+								<div class="timeline-heading">
+									<h4 class="timeline-title">Mussum ipsum cacilds</h4>
+								</div>
+								<div class="timeline-body">
+									<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+								</div>
+							</div>
+						</li>
+						<li class="timeline-inverted">
+							<div class="timeline-badge success"><i class="flaticon-credit-card-1"></i></div>
+							<div class="timeline-panel">
+								<div class="timeline-heading">
+									<h4 class="timeline-title">Mussum ipsum cacilds</h4>
+								</div>
+								<div class="timeline-body">
+									<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+			<!-- PERSONEL -->
+			<div class="card card-round">
+				<div class="card-body">
+					<div class="card-title fw-mediumbold">Personnel</div>
+					<div class="card-list">
+						<div class="item-list">
+							<div class="avatar">
+								<img src="/static/assets/img/jm_denis.jpg" alt="..." class="avatar-img rounded-circle">
+							</div>
+							<div class="info-user ml-3">
+								<div class="username">Garrin Rose</div>
+								<div class="status">Project Manager</div>
+							</div>
+							<button class="btn btn-icon btn-primary btn-round btn-xs">
+								<i class="fa fa-plus"></i>
+							</button>
+						</div>
+						<div class="item-list">
+							<div class="avatar">
+								<img src="/static/assets/img/chadengle.jpg" alt="..." class="avatar-img rounded-circle">
+							</div>
+							<div class="info-user ml-3">
+								<div class="username">Elijah Mendoza</div>
+								<div class="status">Smart</div>
+							</div>
+							<button class="btn btn-icon btn-primary btn-round btn-xs">
+								<i class="fa fa-plus"></i>
+							</button>
+						</div>
+						<div class="item-list">
+							<div class="avatar">
+								<img src="/static/assets/img/talha.jpg" alt="..." class="avatar-img rounded-circle">
+							</div>
+							<div class="info-user ml-3">
+								<div class="username">David Stokarski</div>
+								<div class="status">Dumbo</div>
+							</div>
+							<button class="btn btn-icon btn-primary btn-round btn-xs">
+								<i class="fa fa-plus"></i>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+{% endblock content %}

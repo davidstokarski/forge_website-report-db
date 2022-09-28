@@ -1,0 +1,145 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Twitter Scraper {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<div class="content">
+    <div class="panel-header bg-primary-gradient">
+        <div class="page-inner py-5">
+            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+                <div>
+                    <h2 class="text-white pb-2 fw-bold">Twitter Scraper</h2>
+                    <h5 class="text-white op-7 mb-2">FORGE Security</h5>
+                </div>
+                <div class="ml-md-auto py-2 py-md-0">
+                    <a href="{{ url_for('views.home') }}" class="btn btn-white btn-border btn-round mr-2">Return Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page-inner mt--5">
+        <div class="row row-card-no-pd">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-head-row card-tools-still-right">
+                            <h4 class="card-title">Create New Scrape</h4>
+                            <div class="card-tools">
+                                <button class="btn btn-icon btn-link btn-primary btn-xs"><span class="fa fa-angle-down"></span></button>
+                                <button class="btn btn-icon btn-link btn-primary btn-xs btn-refresh-card"><span class="fa fa-sync-alt"></span></button>
+                                <button class="btn btn-icon btn-link btn-primary btn-xs"><span class="fa fa-times"></span></button>
+                            </div>
+                        </div>
+                        <p class="card-category">
+                        Fill out the form below to create a new scrape</p>
+                    </div>
+                    <div class="card-body">
+                        <form method="POST" action="">
+                            {{ form.hidden_tag() }}
+                            
+                            <div class="form-group">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="icon-user"></i>
+                                        </span>
+                                    </div>
+                                    {{ form.email(placeholder="Email", class="form-control", value=email) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="icon-menu"></i>
+                                        </span>
+                                    </div>
+                                    {{ form.keywords(placeholder="Keywords seperated by ' , ' (ex. human trafficking, incidents, etc.)", class="form-control") }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="icon-target"></i>
+                                        </span>
+                                    </div>
+                                    {{ form.limit(placeholder="Limit of posts", class="form-control") }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Remove Duplicates?</label>
+                                <div class="selectgroup w-100">
+                                    <label class="selectgroup-item">
+                                        <input type="radio" name="value" value="True" class="selectgroup-input" checked="">
+                                        <span class="selectgroup-button">True</span>
+                                    </label>
+                                    <label class="selectgroup-item">
+                                        <input type="radio" name="value" value="False" class="selectgroup-input">
+                                        <span class="selectgroup-button">False</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <br/>
+                            <button class="btn btn-success btn-border btn-round">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt--2"> <!-- BLOG POST -->
+            <div class="col-md-4">
+                <div class="card card-post card-round">
+                    <img class="card-img-top" src="/static/assets/img/code.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <div class="avatar">
+                                <img src="/static/assets/img/profile-outline-light.png" alt="..." class="avatar-img rounded-circle">
+                            </div>
+                            <div class="info-post ml-2">
+                                <p class="username">David Stokarski</p>
+                                <p class="date text-muted">Sep 2 2022</p>
+                            </div>
+                        </div>
+                        <div class="separator-solid"></div>
+                        <p class="card-category text-info mb-1"><a href="#">Function</a></p>
+                        <h3 class="card-title">
+                            <a href="#">
+                                About FORGE Security's Twitter Scraping Function
+                            </a>
+                        </h3>
+                        <p class="card-text">How Delta Team created a scraping mechanism to sift through web reports.</p>
+                        <a href="#" class="btn btn-primary btn-rounded btn-sm">Read More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-title">Archived Reports</div>
+                        <div class="card-category">Archived reports for special projects</div>
+                        <div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
+                            <div class="px-2 pb-2 pb-md-0 text-center">
+                                <button href="#" class="btn btn-primary btn-border">Vanguard</h6>
+                            </div>
+                            <div class="px-2 pb-2 pb-md-0 text-center">
+                                <button href="#" class="btn btn-primary btn-border">SSB</h6>
+                            </div>
+                            <div class="px-2 pb-2 pb-md-0 text-center">
+                                <button href="#" class="btn btn-primary btn-border">BSA</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,10 @@
+apps/input/
+env/
+__pycache__/
+# Scrapy stuff:
+.scrapy
+# Flask stuff:
+instance/
+.webassets-cache
+scrape_cache.pkl
+apps/database.db

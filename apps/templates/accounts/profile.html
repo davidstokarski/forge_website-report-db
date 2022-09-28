@@ -1,0 +1,154 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Profile {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+{% if current_user.is_authenticated %}
+<div class="content">
+    <div class="page-inner">
+        <div class="row row-card-no-pd">
+            <div class="col-md-12">
+                <div class="card card-profile">
+                    <div class="card-header" style="background-image: url('/static/assets/img/blogpost.jpg')">
+                        <div class="profile-picture">
+                            <div class="avatar avatar-xl">
+                                <a href="{{ url_for('views.home') }}"><img src="/static/assets/img/profile-outline-light.png" alt="..." class="avatar-img rounded-circle"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="user-profile text-center">
+                            <div class="name">{{ user.username }}</div>
+                            <div class="job">{{ user.email }}</div>
+                            <div class="desc">Base level account</div>
+                            <div class="social-media">
+                                <a class="btn btn-info btn-twitter btn-sm btn-link" href="#"> 
+                                    <span class="btn-label just-icon"><i class="flaticon-twitter"></i> </span>
+                                </a>
+                                <a class="btn btn-danger btn-sm btn-link" rel="publisher" href="#"> 
+                                    <span class="btn-label just-icon"><i class="flaticon-google-plus"></i> </span> 
+                                </a>
+                                <a class="btn btn-primary btn-sm btn-link" rel="publisher" href="#"> 
+                                    <span class="btn-label just-icon"><i class="flaticon-facebook"></i> </span> 
+                                </a>
+                                <a class="btn btn-danger btn-sm btn-link" rel="publisher" href="#"> 
+                                    <span class="btn-label just-icon"><i class="flaticon-dribbble"></i> </span> 
+                                </a>
+                            </div>
+                            <div class="view-profile">
+                                <a href="{{ url_for('views.auth.edit_profile') }}" class="btn btn-secondary btn-block">Edit Profile</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="row user-stats text-center">
+                            <div class="col">
+                                <div class="number">125</div>
+                                <div class="title">Post</div>
+                            </div>
+                            <div class="col">
+                                <div class="number">25K</div>
+                                <div class="title">Followers</div>
+                            </div>
+                            <div class="col">
+                                <div class="number">134</div>
+                                <div class="title">Following</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- WEB SCRAPE -->
+            <div class="col-sm-6 col-md-3">
+                <a href="{{ url_for('views.scraper.scraper_home') }}">
+                    <div class="card card-stats card-primary card-round">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-5">
+                                    <div class="icon-big text-center">
+                                        <i class="flaticon-internet"></i>
+                                    </div>
+                                </div>
+                                <div class="col-7 col-stats">
+                                    <div class="numbers">
+                                        <p class="card-category">Web Scrapes</p>
+                                        <h4 class="card-title">{{ Scrape.query.filter_by(email=user.email).count() }}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <!-- TWITTER SCRAPE -->
+            <div class="col-sm-6 col-md-3">
+                <a href="{{ url_for('views.twitter.twitter_scraper') }}">
+                    <div class="card card-stats card-info card-round">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-5">
+                                    <div class="icon-big text-center">
+                                        <i class="flaticon-twitter"></i>
+                                    </div>
+                                </div>
+                                <div class="col-7 col-stats">
+                                    <div class="numbers">
+                                        <p class="card-category">Twitter Scrapes</p>
+                                        <h4 class="card-title">{{ Scrape.query.filter_by(email=user.email).count() }}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-sm-6 col-md-3">
+                <div class="card card-stats card-success card-round">
+                    <div class="card-body ">
+                        <div class="row">
+                            <div class="col-5">
+                                <div class="icon-big text-center">
+                                    <i class="flaticon-analytics"></i>
+                                </div>
+                            </div>
+                            <div class="col-7 col-stats">
+                                <div class="numbers">
+                                    <p class="card-category">Sales</p>
+                                    <h4 class="card-title">$ 1,345</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-3">
+                <div class="card card-stats card-secondary card-round">
+                    <div class="card-body ">
+                        <div class="row">
+                            <div class="col-5">
+                                <div class="icon-big text-center">
+                                    <i class="flaticon-success"></i>
+                                </div>
+                            </div>
+                            <div class="col-7 col-stats">
+                                <div class="numbers">
+                                    <p class="card-category">Order</p>
+                                    <h4 class="card-title">576</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endif %}
+{% endblock content %}

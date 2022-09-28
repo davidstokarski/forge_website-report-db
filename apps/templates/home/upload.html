@@ -1,0 +1,55 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Upload {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<div class="content">
+    <div class="panel-header bg-primary-gradient">
+        <div class="page-inner py-5">
+            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+                <div>
+                    <h2 class="text-white pb-2 fw-bold">Upload .csv</h2>
+                    <h5 class="text-white op-7 mb-2">FORGE Security</h5>
+                </div>
+                <div class="ml-md-auto py-2 py-md-0">
+                    <a href="{{ url_for('views.home') }}" class="btn btn-white btn-border btn-round mr-2">
+                        <span class="btn-label">
+                            <i class="fa fa-home"></i>
+                        </span>
+                        Return Home
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page-inner mt--5">
+        <div class="row row-card-no-pd">
+            <div class="col-md-12">
+                <div class="card full-height">
+                    <div class="card-body">
+                        <div class="card-title">Generate Report</div>
+                        <div class="card-category">Upload .csv to see heat maps</div>
+                        <div class="row py-3">
+                            <div class="form-group">
+                                <form action="/upload" method="POST" enctype="multipart/form-data">
+                                    <input type="file" class="form-control-file" id="upload_csv" name="upload_csv">
+                                    <br/>
+                                    <button name="submit" class="btn btn-success">
+                                        <span class="btn-label">
+                                            <i class="fa fa-check"></i>
+                                        </span>
+                                        Submit
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

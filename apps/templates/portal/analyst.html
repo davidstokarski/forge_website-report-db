@@ -1,0 +1,871 @@
+{% extends "portal/portal-base.html" %}
+
+{% block title %} Analyst {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+<!-- <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
+<script defer src="https://pyscript.net/alpha/pyscript.js"></script> -->
+<!-- <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simplemde/1.11.2/simplemde.min.css" integrity="sha512-lB03MbtC3LxImQ+BKnZIyvVHTQ8SSmQ15AhVh5U/+CCp4wKtZMvgLGXbZIjIBBbnKsmk3/6n2vcF8a9CtVVSfA==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.25.2/ui/trumbowyg.min.css"
+    integrity="sha512-K87nr2SCEng5Nrdwkb6d6crKqDAl4tJn/BD17YCXH0hu2swuNMqSV6S8hTBZ/39h+0pDpW/tbQKq9zua8WiZTA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style>
+    body[data-background-color="dark"] .trumbowyg-editor {
+        background-color: #1a2035;
+    }
+
+    body[data-background-color="dark"] .trumbowyg-dark .trumbowyg-button-pane {
+        background-color: #10131e;
+        border-bottom-color: #2f374b;
+    }
+
+    .trumbowyg-dark .trumbowyg-box {
+        border-color: #2f374b
+    }
+
+    .trumbowyg-box {
+        border-radius: .3rem;
+        overflow: hidden;
+        border-color: #2f374b;
+    }
+
+    .trumbowyg-box,
+    .trumbowyg-editor {
+        min-height: 150px;
+    }
+
+    .was-validated .trumbowyg.is-invalid~.invalid-feedback {
+        display: block;
+    }
+
+    .was-validated .trumbowyg.is-invalid .trumbowyg-box {
+        border-color: #dc3545;
+    }
+</style>
+{% endblock stylesheets %}
+
+{% block content %}
+<div class="content">
+    <div class="panel-header bg-primary-gradient">
+        <!-- HEADER -->
+        <div class="page-inner py-5">
+            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+                <div>
+                    <h2 class="text-white pb-2 fw-bold">SI Portal</h2>
+                    <h5 class="text-white op-7 mb-2">FORGE Security</h5>
+                </div>
+                <div class="ml-md-auto py-2 py-md-0">
+                    <a href="{{ url_for('views.home') }}" class="btn btn-white btn-border btn-round mr-2">Return
+                        Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page-inner mt--5">
+        <div class="row row-card-no-pd">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-head-row">
+                            <h4 class="card-title">Analyst</h4>
+                        </div>
+                        <p class="card-category">
+                            Please navigate to your form type.</p>
+                    </div>
+                    <div class="card-body">
+                        <a class="btn btn-outline" href="{{ url_for('views.portal.bulk_upload_wizard') }}">Bulk upload</a>
+                        <div class="table-responsive">
+                            <table id="basic-datatables" class="display table table-striped table-hover" >
+                                <thead>
+                                    <tr>
+                                        <td></td>
+                                        <td>ID</td>
+                                        <!-- <td>status</td> -->
+                                        <!-- <td>user_id</td> -->
+                                        <!-- <td>user</td> -->
+                                        <!-- <td>role_id</td> -->
+                                        <!-- <td>role</td> -->
+                                        <td>Article source</td>
+                                        <td>Article title</td>
+                                        <td>Article text</td>
+                                        <td>Summary title</td>
+                                        <td>Summary text</td>
+                                        <td>Attributes</td>
+                                        <td>Category</td>
+                                        <td>City</td>
+                                        <td>Incident date</td>
+                                        <td>Location</td>
+                                        <td>Project</td>
+                                        <td>Sub category</td>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <td></td>
+                                        <td>ID</td>
+                                        <!-- <td>status</td> -->
+                                        <!-- <td>user_id</td> -->
+                                        <!-- <td>user</td> -->
+                                        <!-- <td>role_id</td> -->
+                                        <!-- <td>role</td> -->
+                                        <td>Article source</td>
+                                        <td>Article title</td>
+                                        <td>Article text</td>
+                                        <td>Summary title</td>
+                                        <td>Summary text</td>
+                                        <td>Attributes</td>
+                                        <td>Category</td>
+                                        <td>City</td>
+                                        <td>Incident date</td>
+                                        <td>Location</td>
+                                        <td>Project</td>
+                                        <td>Sub category</td>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    {% for report in reports %}
+                                    <tr>
+                                        <td><a href="{{ url_for('views.portal.edit_report', id=report.id) }}"><i class="fas fa-edit"></i></a></td>
+                                        <td>{{ report.id }}</td>
+                                        <!-- <td>{{ report.status }}</td> -->
+                                        <!-- <td>{{ report.user_id }}</td> -->
+                                        <!-- <td>{{ report.user }}</td> -->
+                                        <!-- <td>{{ report.role_id }}</td> -->
+                                        <!-- <td>{{ report.role }}</td> -->
+                                        <td>{{ report.article_source }}</td>
+                                        <td>{{ report.article_title }}</td>
+                                        <td>{{ report.article_text | safe }}</td>
+                                        <td>{{ report.summary_title }}</td>
+                                        <td>{{ report.summary_text }}</td>
+                                        <td>{{ report.attributes }}</td>
+                                        <td>{{ report.category }}</td>
+                                        <td>{{ report.city }}</td>
+                                        <td>{{ report.incident_date }}</td>
+                                        <td>{{ report.location }}</td>
+                                        <td>{{ report.project }}</td>
+                                        <td>{{ report.sub_category }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/simplemde/1.11.2/simplemde.min.js" integrity="sha512-ksSfTk6JIdsze75yZ8c+yDVLu09SNefa9IicxEE+HZvWo9kLPY1vrRlmucEMHQReWmEdKqusQWaDMpkTb3M2ug==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.25.2/trumbowyg.min.js"></script>
+
+<!-- <script type="module">
+    import {
+        createSignal,
+        onCleanup,
+        onMount
+    } from "https://cdn.skypack.dev/solid-js";
+    import { render } from "https://cdn.skypack.dev/solid-js/web";
+    import { createStore } from "https://cdn.skypack.dev/solid-js/store";
+    import html from "https://cdn.skypack.dev/solid-js/html";
+
+    // const Editor = toastui.Editor;
+
+
+
+    // got this with
+    /*
+    $$("select").map(s => ({name: s.name, options: Array.from(s.options).map(option => (option.innerText))}))
+    PROJECT_TAXONOMY.reduce((obj, report, i) => {
+    console.log(obj, report, i)
+    return {...obj, [report.lstProjects[i]]: {"category": report.lstCategory, "subCategory": report.lstSubCategory, attributes: report.lstAttributes, location: report.lstLocation}}
+    }, {})
+    */
+    const PROJECTS = ["Border Security Alert", "Vanguard Human Trafficking Report", "SOUTHCOM Security Bulletin", "Border Security Alert Cartel Report"]
+    const PROJECT_TAXONOMY = {
+        "Border Security Alert": {
+            "category": [
+                "Northern Border",
+                "Southern Border",
+                "Ports",
+                "Mexican Cartels"
+            ],
+            "subCategory": [
+                "National Security Incidents",
+                "International Airport Security",
+                "Immigration and Trade Incidents",
+                "Drug Incidents"
+            ],
+            "attributes": [
+                "Seizure/Arrest",
+                "Seizure",
+                "Arrest",
+                "Organizational Changes",
+                "Executions"
+            ],
+            "location": [
+                "Alabama",
+                "Alaska",
+                "American Samoa",
+                "Arizona",
+                "Arkansas",
+                "British Columbia",
+                "California",
+                "Canada",
+                "Colorado",
+                "Connecticut",
+                "Delaware",
+                "District of Columbia",
+                "Florida",
+                "Georgia",
+                "Guam",
+                "Gulf Coast",
+                "Hawaii",
+                "Idaho",
+                "Illinois",
+                "Indiana",
+                "International Waters",
+                "Iowa",
+                "Kansas",
+                "Kentucky",
+                "Louisiana",
+                "Maine",
+                "Maryland",
+                "Massachusetts",
+                "Mexico",
+                "Michigan",
+                "Minnesota",
+                "Mississippi",
+                "Missouri",
+                "Montana",
+                "Nebraska",
+                "Nevada",
+                "New Hampshire",
+                "New Jersey",
+                "New Mexico",
+                "New York",
+                "North Carolina",
+                "North Dakota",
+                "Ohio",
+                "Oklahoma",
+                "Ontario",
+                "Oregon",
+                "Pennsylvania",
+                "Puerto Rico",
+                "Quebec",
+                "Rhode Island",
+                "South Carolina",
+                "South Dakota",
+                "Tennessee",
+                "Texas",
+                "Utah",
+                "Vermont",
+                "Virgin Islands",
+                "Virginia",
+                "Washington",
+                "West Virginia",
+                "Wisconsin",
+                "Wyoming"
+            ]
+        },
+        "Vanguard Human Trafficking Report": {
+            "category": [
+                "Public Sector Events",
+                "Law Enforcement",
+                "NGO",
+                "Trends",
+                "Judiciary",
+                "DO NOT CLICK"
+            ],
+            "subCategory": [
+                "Legislation",
+                "Government Statement",
+                "Training",
+                "Policymaking",
+                "Recommendations",
+                "Arrests",
+                "Wanted Notice",
+                "Conviction",
+                "Sentencing",
+                "Litigation",
+                "Reports",
+                "Fundraising",
+                "Conferences"
+            ],
+            "attributes": [
+                "Rescues",
+                "Technology",
+                "Recommendations",
+                "Organized Crime",
+                "Operations"
+            ],
+            "location": [
+                "Afghanistan",
+                "Albania",
+                "Algeria",
+                "Andorra",
+                "Angola",
+                "Antigua and Barbuda",
+                "Argentina",
+                "Armenia",
+                "Australia",
+                "Austria",
+                "Azerbaijan",
+                "Bahamas",
+                "Bahrain",
+                "Bangladesh",
+                "Barbados",
+                "Belarus",
+                "Belgium",
+                "Belize",
+                "Benin",
+                "Bhutan",
+                "Bolivia",
+                "Bosnia and Herzegovina",
+                "Botswana",
+                "Brazil",
+                "Brunei",
+                "Bulgaria",
+                "Burkina Faso",
+                "Burundi",
+                "Cabo Verde",
+                "Cambodia",
+                "Cameroon",
+                "Canada",
+                "Central African Republic",
+                "Chad",
+                "Chile",
+                "China",
+                "Colombia",
+                "Comoros",
+                "Costa Rica",
+                "Côte d'Ivoire",
+                "Croatia",
+                "Cuba",
+                "Cyprus",
+                "Czech Republic",
+                "Democratic Republic of the Congo",
+                "Denmark",
+                "Djibouti",
+                "Dominica",
+                "Dominican Republic",
+                "Ecuador",
+                "Egypt",
+                "El Salvador",
+                "Equatorial Guinea",
+                "Eritrea",
+                "Estonia",
+                "Eswatini",
+                "Ethiopia",
+                "Fiji",
+                "Finland",
+                "France",
+                "Gabon",
+                "Gambia",
+                "Georgia",
+                "Germany",
+                "Ghana",
+                "Greece",
+                "Greenland",
+                "Grenada",
+                "Guatemala",
+                "Guinea",
+                "Guinea-Bissau",
+                "Guyana",
+                "Haiti",
+                "Holy See",
+                "Hondoras",
+                "Honduras",
+                "Hong Kong",
+                "Hungary",
+                "Iceland",
+                "India",
+                "Indonesia",
+                "Iran",
+                "Iraq",
+                "Ireland",
+                "Israel",
+                "Italy",
+                "Jamaicas",
+                "Japan",
+                "Jordan",
+                "Kazakhstan",
+                "Kenya",
+                "Kiribati",
+                "Kuwait",
+                "Kyrgyzstan",
+                "Laos",
+                "Latvia",
+                "Lebanon",
+                "Lesotho",
+                "Liberia",
+                "Libya",
+                "Liechtenstein",
+                "Lithuania",
+                "Luxembourg",
+                "Madagascar",
+                "Malawi",
+                "Malaysia",
+                "Maldives",
+                "Mali",
+                "Malta",
+                "Marshall Islands",
+                "Mauritania",
+                "Mauritius",
+                "Mexico",
+                "Micronesia",
+                "Moldova",
+                "Monaco",
+                "Mongolia",
+                "Montenegro",
+                "Morocco",
+                "Mozambique",
+                "Myanmar",
+                "Namibia",
+                "Nauru",
+                "Nepal",
+                "Netherlands",
+                "New Zealand",
+                "Nicaragua",
+                "Niger",
+                "Nigeria",
+                "North Korea",
+                "North Macedonia",
+                "Norway",
+                "Oman",
+                "Pakistan",
+                "Palau",
+                "Palestine State",
+                "Panama",
+                "Papua New Guinea",
+                "Paraguay",
+                "Peru",
+                "Philippines",
+                "Poland",
+                "Portugal",
+                "Puerto Rico",
+                "Qatar",
+                "Republic of the Congo",
+                "Romania",
+                "Russia",
+                "Rwanda",
+                "Saint Kitts and Nevis",
+                "Saint Lucia",
+                "Saint Vincent and the Grenadines",
+                "Samoa",
+                "San Marino",
+                "Sao Tome and Principe",
+                "Saudi Arabia",
+                "Scotland",
+                "Senegal",
+                "Serbia",
+                "Seychelles",
+                "Sierra Leone",
+                "Singapore",
+                "Slovakia",
+                "Slovenia",
+                "Solomon Islands",
+                "Somalia",
+                "South Africa",
+                "South Korea",
+                "South Sudan",
+                "Spain",
+                "Sri Lanka",
+                "Sudan",
+                "Suriname",
+                "Sweden",
+                "Switzerland",
+                "Syria",
+                "Taiwan",
+                "Tajikistan",
+                "Tanzania",
+                "Thailand",
+                "Timor-Leste",
+                "Togo",
+                "Tonga",
+                "Trinidad and Tobago",
+                "Tunisia",
+                "Turkey",
+                "Turkmenistan",
+                "Tuvalu",
+                "Uganda",
+                "Ukraine",
+                "United Arab Emirates",
+                "United Kingdom",
+                "United States of America",
+                "Uruguay",
+                "Uzbekistan",
+                "Vanuatu",
+                "Vatican City",
+                "Venezuela",
+                "Vietnam",
+                "Yemen",
+                "Zambia",
+                "Zimbabwe"
+            ]
+        },
+        "SOUTHCOM Security Bulletin": {
+            "category": [
+                "Narcotics",
+                "Protests",
+                "Organized Crime",
+                "Corruption"
+            ],
+            "subCategory": [
+            ],
+            "attributes": [
+            ],
+            "location": [
+                "Antigua",
+                "Argentina",
+                "Bahamas",
+                "Barbados",
+                "Barbuda",
+                "Belize",
+                "Bolivia",
+                "Brazil",
+                "Chile",
+                "Colombia",
+                "Costa Rica",
+                "Cuba",
+                "Dominica",
+                "Dominican Republic",
+                "Ecuador",
+                "El Salvador",
+                "Grenada",
+                "Guatemala",
+                "Guyana",
+                "Haiti",
+                "Honduras",
+                "Jamaica",
+                "Nicaragua",
+                "Panama",
+                "Paraguay",
+                "Peru",
+                "Puerto Rico",
+                "Saint Kitts and Nevis",
+                "Saint Lucia",
+                "Saint Vincent and the Grenadines",
+                "Suriname",
+                "Trinidad and Tobago",
+                "Turks and Caicos Islands",
+                "United States",
+                "Uruguay",
+                "Venezuela",
+                "Virgin Islands"
+            ]
+        },
+        "Border Security Alert Cartel Report": {
+            "category": [
+                "Organization",
+                "Territorial Conflict",
+                "Smuggling"
+            ],
+            "subCategory": [
+                "Violence",
+                "Drug Incidents",
+                "Human Trafficking/Smuggling",
+                "Other"
+            ],
+            "attributes": [
+                "Seizure/Arrest",
+                "Arrest",
+                "Seizure",
+                "Organizational Changes",
+                "Executions",
+                "Propaganda"
+            ],
+            "location": [
+                "Aguascalientes",
+                "Arizona",
+                "Baja California",
+                "Baja California Sur",
+                "California",
+                "Campeche",
+                "Chiapas",
+                "Chihuahua",
+                "Coahuila",
+                "Colima",
+                "Colombia",
+                "Durango",
+                "Florida",
+                "Georgia",
+                "Guanajuato",
+                "Guatemala",
+                "Guerrero",
+                "Hidalgo",
+                "International Waters",
+                "Jalisco",
+                "Mexico",
+                "Mexico City",
+                "Michoacan",
+                "Morelos",
+                "Nayarit",
+                "New Mexico",
+                "Nuevo Leon",
+                "Oaxaca",
+                "Puebla",
+                "Quebec",
+                "Queretaro",
+                "Quintana Roo",
+                "San Luis Potosi",
+                "Sinaloa",
+                "Sonora",
+                "Tabasco",
+                "Tamaulipas",
+                "Tlaxcala",
+                "Veracruz",
+                "Yucatan",
+                "Zacatecas"
+            ]
+        }
+    }
+
+    function checkValid({ element, validators = [] }, setErrors, errorClass) {
+        return async () => {
+            element.setCustomValidity("");
+            element.checkValidity();
+            let message = element.validationMessage;
+            if (!message) {
+                for (const validator of validators) {
+                    const text = await validator(element);
+                    if (text) {
+                        element.setCustomValidity(text);
+                        break;
+                    }
+                }
+                message = element.validationMessage;
+            }
+            if (message) {
+                errorClass && element.classList.toggle(errorClass, true);
+                setErrors({ [element.name]: message });
+            }
+        };
+    }
+
+    function useForm({ errorClass }) {
+        const [errors, setErrors] = createStore({}),
+            fields = {};
+
+        const validate = (ref, accessor) => {
+            const validators = accessor() || [];
+            let config;
+            fields[ref.name] = config = { element: ref, validators };
+            ref.onblur = checkValid(config, setErrors, errorClass);
+            ref.oninput = () => {
+                if (!errors[ref.name]) return;
+                setErrors({ [ref.name]: undefined });
+                errorClass && ref.classList.toggle(errorClass, false);
+            };
+        };
+
+        const formSubmit = (ref, accessor) => {
+            const callback = accessor() || (() => { });
+            ref.setAttribute("novalidate", "");
+            ref.onsubmit = async (e) => {
+                e.preventDefault();
+                let errored = false;
+
+                for (const k in fields) {
+                    const field = fields[k];
+                    await checkValid(field, setErrors, errorClass)();
+                    if (!errored && field.element.validationMessage) {
+                        field.element.focus();
+                        errored = true;
+                    }
+                }
+                !errored && callback(ref);
+            };
+        };
+
+        return { validate, formSubmit, errors };
+    }
+
+
+    const ErrorMessage = (props) => html`<span class="error-message">${props.error}</span>`;
+
+    const Select = (props) => {
+        return html`
+    <select class="custom-select form-control" required=${props.required} name=${props.name} onInput=${props.onInput} value=${props.value}>
+      ${() => props.options.length > 0 ? html`
+      ${props.placeholder && html`<option disabled selected value>${props.placeholder === true ? "-- select one --" : props.placeholder}</option>`}
+        ${() => props.options.map(o => html`<option value="${o}" selected="${props.default && (o === props.default)}">${o}</option>`)}
+        ` : html`<option disabled value>no options available</option>`}
+      </select>
+  `
+    }
+
+    const Form = () => {
+        // const { validate, formSubmit, errors } = useForm({
+        //     errorClass: "error-input"
+        // });
+        const [fields, setFields] = createStore({ project: "Border Security Alert", status: "pending" });
+        const taxonomy = () => PROJECT_TAXONOMY[fields.project || "Border Security Alert"]
+        const setFieldDOM = (e) => setFields(e.target.name, e.target.value)
+        // const fn = (form) => {
+        //     form.submit()
+        //     console.log("Done");
+        // };
+        let summaryRef, articleRef;
+        onMount(() => {
+            // console.log(summaryRef)
+            $(summaryRef).trumbowyg({
+                btns: [['bold', 'italic', 'underline'], ['link']],
+                // autogrowOnEnter: true,
+                autogrow: true
+            })
+            $(articleRef).trumbowyg({
+                btns: [['bold', 'italic', 'underline'], ['link']],
+                // autogrowOnEnter: true,
+                autogrow: true
+            })
+        })
+        const validateForm = (form) => {
+            const validity = form.checkValidity()
+            if (validity === false) {
+                form.querySelector(":invalid").scrollIntoView({ behavior: "smooth" })
+                for (let $el of form.querySelectorAll(".trumbowyg-textarea:invalid")) {
+                    $el.parentElement.parentElement.classList.add('is-invalid')
+                }
+            }
+            form.classList.add('was-validated');
+            return validity
+        }
+        const handleSubmit = (e) => {
+            if (!validateForm(e.target)) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+        }
+        const handleIrrelevant = (e) => {
+            // if (e.target.checkValidity() === false) {
+            //     e.preventDefault();
+            //     e.stopPropagation();
+            // }
+            // const form = e.target.parentElement;
+            // let _action = form.action
+            const form = e.target.parentElement.parentElement
+            setFields("status", "irrelevant")
+            // form.status = "irrelevant";
+
+            if (!validateForm(form)) return false;
+            // form.action = "publication/invalidate" 
+            form.submit()
+        }
+        return (html`
+        <form onSubmit=${handleSubmit} novalidate action="publication/create" method="post">
+            <!-- disable submission with the enter key --
+            <input type="submit" disabled style="display: none" aria-hidden="true" />
+            <h2>Taxonomy</h2>
+            <div class="form-group">
+                <label for="project" hidden>Project: </label>
+                <${Select} name="project" required=${true} onInput=${setFieldDOM} options=${PROJECTS}
+                    placeholder="-- Project --" />
+                <div class="invalid-feedback">
+                    This field is required
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col">
+                        <${Select} name="category" required=${true} onInput=${setFieldDOM} options=${()=> taxonomy().category}
+                            placeholder="-- Category --" />
+                            <div class="invalid-feedback">
+                                This field is required
+                            </div>
+                    </div>
+                    <div class="col">
+
+                        <${Select} name="sub_category" onInput=${setFieldDOM} options=${()=> taxonomy().subCategory}
+                            placeholder="-- Subcategory --" />
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="attributes" hidden>Attributes: </label>
+                <${Select} name="attributes" onInput=${setFieldDOM} options=${()=> taxonomy().attributes} placeholder="--
+                    Attributes --" />
+            </div>
+            <h2 class="mt-3">Metadata</h2>
+            <div class="form-group">
+                <label for="incident_date">Article date </label>
+                <input class="form-control" name="incident_date" onInput=${setFieldDOM} type="date" />
+            </div>
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col">
+                        <label for="location" hidden>Location: </label>
+                        <${Select} name="location" onInput=${setFieldDOM} options=${()=> taxonomy().location} placeholder="--
+                            Location --" />
+                    </div>
+                    <div class="col">
+                        <label for="city" hidden>City: </label>
+                        <input class="form-control" name="city" onInput=${setFieldDOM} type="text" placeholder="City" />
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="article_source" hidden>Article source: </label>
+                <input class="form-control" name="article_source" onInput=${setFieldDOM} type="text" placeholder="Source" />
+            </div>
+            <h2 class="mt-3">Article</h2>
+            <div class="form-group">
+                <label for="article_title" hidden>Article title: </label>
+                <input class="form-control form-control-lg" name="article_title" required onInput=${setFieldDOM} type="text"
+                    placeholder="Original title" />
+                <div class="invalid-feedback">
+                    This field is required
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="article_text" hidden>Article text: </label>
+                <div class="trumbowyg trumbowyg-dark">
+
+                    <textarea
+                        ref=${(ref)=> articleRef = ref} required class="form-control" name="article_text" onInput=${setFieldDOM}></textarea>
+                </div>
+                <div class="invalid-feedback">
+                    This field is required
+                </div>
+            </div>
+            <h2 class="mt-3">Summary</h2>
+            <div class="form-group">
+                <label for="summary_title" hidden>Summary title: </label>
+                <input class="form-control form-control-lg" name="summary_title" onInput=${setFieldDOM} type="text"
+                    placeholder="Title" />
+            </div>
+            <div class="form-group trumbowyg-dark">
+                <label for="summary_text" hidden>Summary text: </label>
+                <div class="trumbowyg trumbowyg-dark">
+                    <textarea
+                        ref=${(ref)=> summaryRef = ref} class="form-control" name="summary_text" onInput=${setFieldDOM}></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="status">Status</label>
+                <${Select} id="status" name="status" onInput=${setFieldDOM} value=${fields.status} options=${["pending", "done"
+                    , "irrelevant" ]} default="pending" />
+
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary mr-3">
+                    <span class="btn-label"><i class="fa fa-check"></i></span>
+                    Submit
+                </button> 
+                <button type="button" class="btn btn-outline-danger" onClick=${handleIrrelevant}>
+                    <span class='btn-label'><i class="fa fa-exclamation-circle"></i></span> 
+                    Irrelevant
+                </button>
+            </div>
+        </form>
+  `);
+    };
+
+    render(Form, document.getElementById("form"));
+</script> -->
+{% endblock %}

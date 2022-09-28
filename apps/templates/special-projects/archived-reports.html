@@ -1,0 +1,89 @@
+{% extends "special-projects/base.html" %}
+
+{% block title %}Archived Reports{% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<div class="content">
+    <div class="panel-header bg-primary-gradient">
+        <div class="page-inner py-5">
+            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+                <div>
+                    <h2 class="text-white pb-2 fw-bold">Archived Reports</h2>
+                    <h5 class="text-white op-7 mb-2"></h5>
+                </div>
+                <div class="ml-md-auto py-2 py-md-0">
+                    <a href="{{ url_for('views.home') }}" class="btn btn-white btn-border btn-round mr-2">
+                        <span class="btn-label">
+                            <i class="fa fa-home"></i>
+                        </span>
+                        Return Home
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page-inner mt--5">
+        <div class="row row-card-no-pd">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-head-row card-tools-still-right">
+                            <h4 class="card-title">Download Reports</h4>
+                            <div class="card-tools">
+                                <button class="btn btn-icon btn-link btn-primary btn-xs"><span class="fa fa-angle-down"></span></button>
+                                <button class="btn btn-icon btn-link btn-primary btn-xs btn-refresh-card"><span class="fa fa-sync-alt"></span></button>
+                                <button class="btn btn-icon btn-link btn-primary btn-xs"><span class="fa fa-times"></span></button>
+                            </div>
+                        </div>
+                        <p class="card-category">
+                        Archived reports for Special Projects</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="table-responsive table-hover table-sales">
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div class="">
+                                                    <img src="" alt="">
+                                                </div>
+                                            </td>
+                                            <td>Filename</td>
+                                            <td class="text-right">
+                                                Size
+                                            </td>
+                                            <td class="text-right">
+                                                Date Published
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="icon">
+                                                    <a href="files/bg-404.jpeg" download="pic.jpeg">
+                                                        <i class="fas fa-download"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                            <td>file1.png</td>
+                                            <td class="text-right">
+                                                2.320 MB
+                                            </td>
+                                            <td class="text-right">
+                                                02/04/2017
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

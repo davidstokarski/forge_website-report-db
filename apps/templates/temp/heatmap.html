@@ -1,0 +1,47 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Heatmp{% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+{% block content %}
+
+<div class="content">
+    <div class="panel-header bg-primary-gradient">
+        <div class="page-inner py-5">
+            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+                <div>
+                    <h2 class="text-white pb-2 fw-bold">Heatmap</h2>
+                    <h5 class="text-white op-7 mb-2"></h5>
+                </div>
+                <div class="ml-md-auto py-2 py-md-0">
+                    <a href="{{ url_for('views.ClusterMapTestSSB') }}" class="btn btn-white btn-round mr-2" target="_blank">
+                        <span class="btn-label">
+                            <i class="fa fa-globe"></i>
+                        </span>
+                        View Heatmap
+                    </a>
+                    <a href="{{ url_for('views.home') }}" class="btn btn-white btn-border btn-round mr-2">
+                        <span class="btn-label">
+                            <i class="fa fa-home"></i>
+                        </span>
+                        Return Home
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page-inner mt--5">
+        <div class="row row-card-no-pd">
+            <div class="col-md-12">
+                <h5 class="text-white op-7 mb-2">new heatmap generated <time datetime="YYYY-MM-DDThh:mm:ssTZD"> </h5>
+                    <div id="current_date">
+                        <script>
+                        document.getElementById("current_date").innerHTML = Date();
+                        </script>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
